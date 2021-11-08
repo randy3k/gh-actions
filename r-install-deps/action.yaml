@@ -13,7 +13,7 @@ runs:
   using: 'composite'
   steps:
     - name: Install pak and query dependencies
-      run:
+      run: |
         cat("::group::Install pak\n")
         options(pak.no_extra_messages = TRUE)
         install.packages("pak", repos = "https://r-lib.github.io/p/pak/devel/")
