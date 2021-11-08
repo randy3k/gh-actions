@@ -1,5 +1,5 @@
-name: Check R
-description: Setup R and run R CMD Check
+name: Check an R package
+description: Setup R and run R CMD Check for an R package
 inputs:
   r-version:
     description: 'Version range or exact version of an R version to use.'
