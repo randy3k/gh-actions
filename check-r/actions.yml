@@ -1,0 +1,30 @@
+name: Check R
+description: Setup R and run R CMD Check
+inputs:
+  r-version:
+    description: 'Version range or exact version of an R version to use.'
+    required: true
+    default: 'release'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: ${{ inputs.r-version }}
+        http-user-agent: ${{ inputs.r-version == 'devel' && 'release' || 'default' }}
+        use-public-rspm: true
+    - uses: r-lib/actions/setup-r-dependencies@v1
+      with:
+        extra-packages: rcmdcheck
+    - uses: r-lib/actions/check-r-package@v1
+    - name: Show testthat output
+      if: always()
+      run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+      shell: bash
+    - name: Upload check results
+      if: failure()
+      uses: actions/upload-artifact@main
+      with:
+        name: ${{ runner.os }}-r-${{ inputs.r-version }}-results
+        path: check
