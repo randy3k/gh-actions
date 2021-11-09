@@ -14,7 +14,15 @@ runs:
         ln -sf /usr/local/bin/RDscript /usr/local/bin/Rscript
         echo R_LIBS_USER=/usr/local/lib/R/site-library >> $GITHUB_ENV
         echo _R_CHECK_CRAN_INCOMING_=false >> $GITHUB_ENV
+        apt-get update
       shell: bash
+    - name: Install system dependencies
+      run: |
+        # rocker/r-devel-ubsan-clang is debian, however pak doesn't support debian
+        # we just hope that the ubuntu packages will be same.
+        install.packages("pak", repos = "https://r-lib.github.io/p/pak/devel/")
+        pak::local_system_requirements("ubuntu", "20.04", execute = TRUE, sudo = FALSE)
+      shell: Rscript {0}
     - uses: randy3k/gh-actions/r-install-deps@main
       with:
         extra-packages: rcmdcheck
