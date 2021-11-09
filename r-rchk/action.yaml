@@ -1,0 +1,20 @@
+name: rchk Test for R package
+description: Run rchk test for an R package.
+inputs:
+  cache-version:
+    description: 'The version of the cache, change this from the default (1) to start over with a fresh cache'
+    required: true
+    default: 1
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup rchk
+      run: bash $GITHUB_ACTION_PATH/setup.sh
+      shell: bash
+    - uses: r-lib/actions/setup-r-dependencies@v1
+      with:
+        cache-version: rchk-${{ inputs.cache-version }}
+    - name: Run rchk
+      run: bash $GITHUB_ACTION_PATH/run.sh
+      shell: bash

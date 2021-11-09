@@ -1,0 +1,25 @@
+name: UBsan Test for R package
+description: Run UBsan test for an R package.
+inputs:
+  cache-version:
+    description: 'The version of the cache, change this from the default (1) to start over with a fresh cache'
+    required: true
+    default: 1
+
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        ln -sf /usr/local/bin/RD /usr/local/bin/R
+        ln -sf /usr/local/bin/RDscript /usr/local/bin/Rscript
+        echo R_LIBS_USER=/usr/local/lib/R/site-library >> $GITHUB_ENV
+        echo _R_CHECK_CRAN_INCOMING_=false >> $GITHUB_ENV
+      shell: bash
+    - uses: randy3k/gh-actions/r-install-deps@main
+      with:
+        extra-packages: rcmdcheck
+        cache-version: ubsan-${{ inputs.cache-version }}
+    - name: Running Tests
+      run: |
+        rcmdcheck::rcmdcheck(args = c('--as-cran', '--no-manual'), error_on = 'warning')
+      shell: Rscript {0}
