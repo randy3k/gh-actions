@@ -1,7 +1,8 @@
 name: Install R package dependencies
 description: |
-  Follow https://github.com/r-lib/actions/blob/16f69b28bd300ec48b0182a6a8d4185e7f28781d/examples/check-full.yaml
-  intead of using `setup-r-dependencies` as `pak` does not support debian. See https://github.com/r-lib/actions/issues/431
+  Instead of using `setup-r-dependencies` directly, we adopt the `remotes` based approach at
+  https://github.com/r-lib/actions/blob/16f69b28bd300ec48b0182a6a8d4185e7f28781d/examples/check-full.yaml
+  as `pak` may not work. See https://github.com/r-lib/actions/issues/431
   and https://github.com/r-lib/actions/issues/494.
 inputs:
   cache-version:
