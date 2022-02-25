@@ -15,6 +15,10 @@ runs:
     - uses: randy3k/gh-actions/r-install-deps@main
       with:
         cache-version: rchk-${{ inputs.cache-version }}
+    - name: Install package
+      run: |
+        remotes::install_local()
+      shell: Rscript {0}
     - name: Run rchk
       run: bash $GITHUB_ACTION_PATH/run.sh
       shell: bash
