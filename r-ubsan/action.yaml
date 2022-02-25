@@ -15,6 +15,7 @@ runs:
         echo R_LIBS_USER=/usr/local/lib/R/site-library >> $GITHUB_ENV
         echo _R_CHECK_CRAN_INCOMING_=false >> $GITHUB_ENV
         apt-get update
+        apt install curl
       shell: bash
     - uses: randy3k/gh-actions/r-install-deps@main
       with:
