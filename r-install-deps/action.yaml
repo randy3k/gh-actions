@@ -18,7 +18,7 @@ runs:
       run: |
         cat("::group::Install pak\n")
         options(pak.no_extra_messages = TRUE)
-        install.packages("pak", repos = "https://r-lib.github.io/p/pak/devel/")
+        install.packages("pak")
         saveRDS(pak::pkg_deps("local::.", dependencies = TRUE), ".github/r-depends.rds")
       shell: Rscript {0}
 

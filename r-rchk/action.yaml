@@ -12,7 +12,7 @@ runs:
     - name: Setup rchk
       run: bash $GITHUB_ACTION_PATH/setup.sh
       shell: bash
-    - uses: r-lib/actions/setup-r-dependencies@v1
+    - uses: randy3k/gh-actions/r-install-deps@main
       with:
         cache-version: rchk-${{ inputs.cache-version }}
     - name: Run rchk
